@@ -49,7 +49,7 @@ const addProduct = async (req, res) => {
 }
 
 //function for list product
-const listProducts = async (req,res) => {
+const listProducts = async (req, res) => {
 try {
     
       const products = await productModel.find({});
@@ -62,7 +62,7 @@ try {
 }
 
 // function for removing product
-const removeProduct = async (req,res) => {
+const removeProduct = async (req, res) => {
     try {
         
          await productModel.findByIdAndDelete(req.body.id)
