@@ -49,7 +49,7 @@ const List = ({token}) => {
    },[])
 
   return (
-    <>
+  <>
         <p className='mb-2'>All Products List</p>
         <div className='flex flex-col gap-2'>
 
@@ -80,6 +80,6 @@ const List = ({token}) => {
         </div>
     </>
   )
-}
+ }
 
 export default List
