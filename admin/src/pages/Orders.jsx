@@ -6,7 +6,7 @@ import { backendUrl, currency } from '../App'
 import {toast} from 'react-toastify'
 import { assets } from '../assets/assets'
 
-const Orders = (token) => {
+const Orders = ({token}) => {
   
   const [orders,setOrders] = useState([])
 
@@ -30,6 +30,18 @@ const Orders = (token) => {
       toast.error(error.message)
     }
 
+  }
+
+  const statusHandler = async ( event, orderId ) => {
+    try {
+      const response = await axios.post(backendUrl + '/api/order/status' , {orderId, status:event.target.value}, { headers: {token}})
+      if (response.data.success) {
+         await fetchAllOrders()
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(response.data.message)
+    }
   }
 
   useEffect(()=>{
@@ -58,7 +70,7 @@ const Orders = (token) => {
                <p className='mt-3 mb-2 font-medium'>{order.address.firstName + " " + order.address.lastName}</p>
                <div>
                 <p>{order.address.street + ","}</p>
-                <p>{order.address.street + ", " + order.address.state + ", " + order.address.country + ", " + order.address.zipcode}</p>
+                <p>{order.address.city + ", " + order.address.state + ", " + order.address.country + ", " + order.address.zipcode}</p>
                </div>
                <p>{order.address.phone}</p>
             </div>
@@ -69,7 +81,7 @@ const Orders = (token) => {
                 <p>Date : {new Date(order.date).toLocaleDateString()}</p>
                </div>
                <p className='text-sm sm:text-[15px]'>{currency}{order.amount}</p>
-               <select value={order.status} className='p-2 font-semibold'>
+               <select onChange={(event)=>statusHandler(event,order._id)} value={order.status} className='p-2 font-semibold'>
                 <option value="Order Placed">Order Placed</option>
                 <option value="Packing">Packing</option>
                 <option value="Shipped">Shippped</option>
