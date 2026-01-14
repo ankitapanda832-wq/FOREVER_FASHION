@@ -22,7 +22,7 @@ const loadOrderData = async () => {
       if (response.data.success) {
           let allOrdersItem = []
           response.data.orders.map((order)=>{
-          order.item.map((item)=>{
+          order.items.map((item)=>{
              item['status'] = order.status
              item['payment'] = order.payment
              item['paymentMethod'] = order.paymentMethod
